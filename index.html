@@ -3,54 +3,51 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
-<meta name="theme-color" content="#0a0a14" />
 <title>Mobile3 Dashboard</title>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+  /* ── 라이트 모드 (기본) ── */
   :root {
-    --bg-deep: #0a0a14;
-    --glass-bg: rgba(255,255,255,0.06);
-    --glass-bg-hover: rgba(255,255,255,0.09);
-    --glass-border: rgba(255,255,255,0.11);
-    --glass-border-hover: rgba(255,255,255,0.22);
-    --text-primary: rgba(255,255,255,0.96);
-    --text-secondary: rgba(255,255,255,0.58);
-    --text-tertiary: rgba(255,255,255,0.34);
+    --glass-bg:          rgba(0, 0, 0, 0.05);
+    --glass-bg-hover:    rgba(0, 0, 0, 0.08);
+    --glass-border:      rgba(0, 0, 0, 0.10);
+    --glass-border-hover:rgba(0, 0, 0, 0.20);
+    --text-primary:      rgba(0, 0, 0, 0.88);
+    --text-secondary:    rgba(0, 0, 0, 0.50);
+    --text-tertiary:     rgba(0, 0, 0, 0.30);
+    --hero-gradient: linear-gradient(180deg, #111 0%, rgba(0,0,0,0.55) 100%);
+  }
+
+  /* ── 다크 모드 ── */
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --glass-bg:          rgba(255, 255, 255, 0.06);
+      --glass-bg-hover:    rgba(255, 255, 255, 0.09);
+      --glass-border:      rgba(255, 255, 255, 0.11);
+      --glass-border-hover:rgba(255, 255, 255, 0.22);
+      --text-primary:      rgba(255, 255, 255, 0.96);
+      --text-secondary:    rgba(255, 255, 255, 0.58);
+      --text-tertiary:     rgba(255, 255, 255, 0.34);
+      --hero-gradient: linear-gradient(180deg, #fff 0%, rgba(255,255,255,0.60) 100%);
+    }
   }
 
   html, body {
-    background: var(--bg-deep);
+    background: transparent;
     color: var(--text-primary);
     font-family: -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
     -webkit-font-smoothing: antialiased;
     letter-spacing: -0.011em;
   }
 
-  .bg-gradient {
-    position: fixed; inset: 0; z-index: 0;
-    background:
-      radial-gradient(at 15% 15%, #6366f1 0px, transparent 45%),
-      radial-gradient(at 85% 5%,  #8b5cf6 0px, transparent 50%),
-      radial-gradient(at 90% 75%, #ec4899 0px, transparent 45%),
-      radial-gradient(at 10% 85%, #06b6d4 0px, transparent 45%);
-    filter: saturate(1.15) brightness(0.65);
-  }
-
-  .bg-overlay {
-    position: fixed; inset: 0; z-index: 1;
-    background: radial-gradient(ellipse at top, transparent 0%, var(--bg-deep) 75%);
-    pointer-events: none;
-  }
-
   .container {
-    position: relative; z-index: 10;
     width: 100%;
     padding: 12px 12px 14px;
     display: flex; flex-direction: column; gap: 8px;
   }
 
-  /* 전체 과제 히어로 카드 */
+  /* ── 전체 과제 히어로 ── */
   .hero {
     position: relative;
     background: var(--glass-bg);
@@ -63,7 +60,7 @@
     text-decoration: none; color: inherit; display: block;
     transition: border-color 0.2s, background 0.2s;
   }
-  .hero:active { opacity: 0.85; }
+  .hero:active { opacity: 0.8; }
   @media (hover: hover) {
     .hero:hover { border-color: var(--glass-border-hover); background: var(--glass-bg-hover); }
   }
@@ -75,7 +72,7 @@
   .hero-glow {
     position: absolute; top: -40%; right: -10%;
     width: 180px; height: 180px; border-radius: 50%;
-    background: radial-gradient(circle, rgba(139,92,246,0.4), transparent 65%);
+    background: radial-gradient(circle, rgba(139,92,246,0.25), transparent 65%);
     filter: blur(30px); pointer-events: none;
   }
   .hero-content { position: relative; z-index: 1; }
@@ -87,14 +84,14 @@
   .hero-number { display: flex; align-items: baseline; gap: 7px; }
   .hero-value {
     font-size: 52px; font-weight: 700; line-height: 1; letter-spacing: -0.04em;
-    background: linear-gradient(180deg, #fff 0%, rgba(255,255,255,0.6) 100%);
+    background: var(--hero-gradient);
     -webkit-background-clip: text; background-clip: text;
     -webkit-text-fill-color: transparent;
     font-feature-settings: 'tnum' 1;
   }
   .hero-unit { font-size: 13px; color: var(--text-tertiary); }
 
-  /* 2×2 그리드 */
+  /* ── 2×2 그리드 ── */
   .stats-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -131,12 +128,17 @@
   .stat-glow {
     position: absolute; bottom: -30px; right: -20px;
     width: 100px; height: 100px; border-radius: 50%;
-    filter: blur(24px); pointer-events: none; opacity: 0.45;
+    filter: blur(24px); pointer-events: none; opacity: 0.30;
   }
   .glow-blue  { background: radial-gradient(circle, #3b82f6, transparent 70%); }
   .glow-amber { background: radial-gradient(circle, #f59e0b, transparent 70%); }
   .glow-green { background: radial-gradient(circle, #10b981, transparent 70%); }
   .glow-red   { background: radial-gradient(circle, #ef4444, transparent 70%); }
+
+  @media (prefers-color-scheme: dark) {
+    .stat-glow { opacity: 0.45; }
+    .hero-glow { opacity: 1; }
+  }
 
   .stat-label {
     position: relative; z-index: 1;
@@ -168,9 +170,6 @@
 </style>
 </head>
 <body>
-  <div class="bg-gradient"></div>
-  <div class="bg-overlay"></div>
-
   <div class="container">
     <a class="hero" href="https://www.notion.so/116296d07fca40fa978d5cc2a3c78eb0?v=337056cc7000803f99ad000c968ac036" target="_blank" rel="noopener">
       <div class="hero-glow"></div>
@@ -218,8 +217,7 @@
       const start = performance.now();
       (function tick(now) {
         const p = Math.min((now - start) / duration, 1);
-        const eased = 1 - Math.pow(1 - p, 2.5);
-        el.textContent = Math.floor(target * eased);
+        el.textContent = Math.floor(target * (1 - Math.pow(1 - p, 2.5)));
         if (p < 1) requestAnimationFrame(tick);
         else el.textContent = target;
       })(start);
@@ -231,7 +229,6 @@
       const res = await fetch('./data.json?v=' + Date.now(), { cache: 'no-store' });
       if (!res.ok) throw new Error(res.status);
       const d = await res.json();
-
       animateCount(document.getElementById('totalValue'),      d.total,      300);
       animateCount(document.getElementById('inProgressValue'), d.inProgress, 400);
       animateCount(document.getElementById('holdValue'),       d.hold,       500);
