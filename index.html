@@ -16,6 +16,7 @@
     --glass-border-hover: rgba(255,255,255,0.22);
     --text-primary: rgba(255,255,255,0.96);
     --text-secondary: rgba(255,255,255,0.58);
+    --text-tertiary: rgba(255,255,255,0.34);
   }
 
   html, body {
@@ -46,6 +47,55 @@
     position: relative; z-index: 10;
     width: 100%;
     padding: 12px 12px 14px;
+    display: flex; flex-direction: column; gap: 8px;
+  }
+
+  /* 전체 과제 히어로 카드 */
+  .hero {
+    position: relative;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 18px;
+    padding: 18px 20px;
+    overflow: hidden;
+    opacity: 0;
+    animation: card-in 0.7s 0.05s cubic-bezier(0.16,1,0.3,1) forwards;
+    text-decoration: none; color: inherit; display: block;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .hero:active { opacity: 0.85; }
+  @media (hover: hover) {
+    .hero:hover { border-color: var(--glass-border-hover); background: var(--glass-bg-hover); }
+  }
+  .hero::before {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.07) 0%, transparent 55%);
+    pointer-events: none;
+  }
+  .hero-glow {
+    position: absolute; top: -40%; right: -10%;
+    width: 180px; height: 180px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(139,92,246,0.4), transparent 65%);
+    filter: blur(30px); pointer-events: none;
+  }
+  .hero-content { position: relative; z-index: 1; }
+  .hero-label {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 11px; font-weight: 500; color: var(--text-secondary);
+    margin-bottom: 6px;
+  }
+  .hero-number { display: flex; align-items: baseline; gap: 7px; }
+  .hero-value {
+    font-size: 52px; font-weight: 700; line-height: 1; letter-spacing: -0.04em;
+    background: linear-gradient(180deg, #fff 0%, rgba(255,255,255,0.6) 100%);
+    -webkit-background-clip: text; background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-feature-settings: 'tnum' 1;
+  }
+  .hero-unit { font-size: 13px; color: var(--text-tertiary); }
+
+  /* 2×2 그리드 */
+  .stats-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 8px;
@@ -55,29 +105,28 @@
     position: relative;
     background: var(--glass-bg);
     border: 1px solid var(--glass-border);
-    border-radius: 16px;
-    padding: 16px 16px 14px;
+    border-radius: 14px;
+    padding: 14px 16px 12px;
     overflow: hidden;
     opacity: 0;
     text-decoration: none; color: inherit;
     transition: border-color 0.2s, background 0.2s;
-    display: flex; flex-direction: column; gap: 12px;
+    display: flex; flex-direction: column; gap: 10px;
   }
   .stat-card:active { opacity: 0.8; }
   @media (hover: hover) {
     .stat-card:hover { border-color: var(--glass-border-hover); background: var(--glass-bg-hover); }
   }
-
   .stat-card::before {
     content: ''; position: absolute; inset: 0;
-    background: linear-gradient(135deg, rgba(255,255,255,0.06) 0%, transparent 50%);
+    background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, transparent 50%);
     pointer-events: none;
   }
 
-  .stat-card:nth-child(1) { animation: card-in 0.7s 0.05s cubic-bezier(0.16,1,0.3,1) forwards; }
-  .stat-card:nth-child(2) { animation: card-in 0.7s 0.12s cubic-bezier(0.16,1,0.3,1) forwards; }
-  .stat-card:nth-child(3) { animation: card-in 0.7s 0.19s cubic-bezier(0.16,1,0.3,1) forwards; }
-  .stat-card:nth-child(4) { animation: card-in 0.7s 0.26s cubic-bezier(0.16,1,0.3,1) forwards; }
+  .stat-card:nth-child(1) { animation: card-in 0.7s 0.12s cubic-bezier(0.16,1,0.3,1) forwards; }
+  .stat-card:nth-child(2) { animation: card-in 0.7s 0.19s cubic-bezier(0.16,1,0.3,1) forwards; }
+  .stat-card:nth-child(3) { animation: card-in 0.7s 0.26s cubic-bezier(0.16,1,0.3,1) forwards; }
+  .stat-card:nth-child(4) { animation: card-in 0.7s 0.33s cubic-bezier(0.16,1,0.3,1) forwards; }
 
   .stat-glow {
     position: absolute; bottom: -30px; right: -20px;
@@ -94,7 +143,6 @@
     display: flex; align-items: center; gap: 6px;
     font-size: 11px; font-weight: 500; color: var(--text-secondary);
   }
-
   .stat-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
   .dot-blue  { background: #3b82f6; box-shadow: 0 0 5px #3b82f6; }
   .dot-amber { background: #f59e0b; box-shadow: 0 0 5px #f59e0b; }
@@ -103,16 +151,17 @@
 
   .stat-value {
     position: relative; z-index: 1;
-    font-size: 38px; font-weight: 700; line-height: 1;
+    font-size: 36px; font-weight: 700; line-height: 1;
     letter-spacing: -0.03em; color: var(--text-primary);
     font-feature-settings: 'tnum' 1;
   }
+
+  .loading-text { color: var(--text-tertiary); font-size: 20px; }
 
   @keyframes card-in {
     from { opacity: 0; transform: translateY(14px) scale(0.97); }
     to   { opacity: 1; transform: translateY(0)   scale(1);    }
   }
-
   @media (prefers-reduced-motion: reduce) {
     * { animation-duration: 0.01ms !important; }
   }
@@ -123,34 +172,48 @@
   <div class="bg-overlay"></div>
 
   <div class="container">
-    <a class="stat-card" href="https://www.notion.so/35a056cc7000812b85c0fd61d3e40a5d" target="_blank" rel="noopener">
-      <div class="stat-glow glow-blue"></div>
-      <div class="stat-label"><span class="stat-dot dot-blue"></span>진행 중</div>
-      <div class="stat-value" id="inProgressValue">0</div>
+    <a class="hero" href="https://www.notion.so/35a056cc7000812fa6d7c10bbaa60945" target="_blank" rel="noopener">
+      <div class="hero-glow"></div>
+      <div class="hero-content">
+        <div class="hero-label">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><path d="M3 9.5L12 4l9 5.5"/><path d="M5 10v8a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-8"/></svg>
+          <span>전체 과제 · Total</span>
+        </div>
+        <div class="hero-number">
+          <span class="hero-value" id="totalValue"><span class="loading-text">…</span></span>
+          <span class="hero-unit">건</span>
+        </div>
+      </div>
     </a>
 
-    <a class="stat-card" href="https://www.notion.so/35a056cc700081309c8ef8844b5bf38c" target="_blank" rel="noopener">
-      <div class="stat-glow glow-amber"></div>
-      <div class="stat-label"><span class="stat-dot dot-amber"></span>보류</div>
-      <div class="stat-value" id="holdValue">0</div>
-    </a>
-
-    <a class="stat-card" href="https://www.notion.so/35a056cc7000814eb001e0e84129d32b" target="_blank" rel="noopener">
-      <div class="stat-glow glow-green"></div>
-      <div class="stat-label"><span class="stat-dot dot-green"></span>완료</div>
-      <div class="stat-value" id="doneValue">0</div>
-    </a>
-
-    <a class="stat-card" href="https://www.notion.so/35a056cc70008175a6c5faa4ad646519" target="_blank" rel="noopener">
-      <div class="stat-glow glow-red"></div>
-      <div class="stat-label"><span class="stat-dot dot-red"></span>삭제</div>
-      <div class="stat-value" id="deleteValue">0</div>
-    </a>
+    <div class="stats-grid">
+      <a class="stat-card" href="https://www.notion.so/35a056cc7000812b85c0fd61d3e40a5d" target="_blank" rel="noopener">
+        <div class="stat-glow glow-blue"></div>
+        <div class="stat-label"><span class="stat-dot dot-blue"></span>진행 중</div>
+        <div class="stat-value" id="inProgressValue"><span class="loading-text">…</span></div>
+      </a>
+      <a class="stat-card" href="https://www.notion.so/35a056cc700081309c8ef8844b5bf38c" target="_blank" rel="noopener">
+        <div class="stat-glow glow-amber"></div>
+        <div class="stat-label"><span class="stat-dot dot-amber"></span>보류</div>
+        <div class="stat-value" id="holdValue"><span class="loading-text">…</span></div>
+      </a>
+      <a class="stat-card" href="https://www.notion.so/35a056cc7000814eb001e0e84129d32b" target="_blank" rel="noopener">
+        <div class="stat-glow glow-green"></div>
+        <div class="stat-label"><span class="stat-dot dot-green"></span>완료</div>
+        <div class="stat-value" id="doneValue"><span class="loading-text">…</span></div>
+      </a>
+      <a class="stat-card" href="https://www.notion.so/35a056cc70008175a6c5faa4ad646519" target="_blank" rel="noopener">
+        <div class="stat-glow glow-red"></div>
+        <div class="stat-label"><span class="stat-dot dot-red"></span>삭제</div>
+        <div class="stat-value" id="deleteValue"><span class="loading-text">…</span></div>
+      </a>
+    </div>
   </div>
 
 <script>
   function animateCount(el, target, delay) {
     setTimeout(() => {
+      el.innerHTML = '';
       const duration = 2500;
       const start = performance.now();
       (function tick(now) {
@@ -163,14 +226,23 @@
     }, delay);
   }
 
-  const D = { inProgress: 15, hold: 3, done: 4, delete: 0 };
+  async function loadStats() {
+    try {
+      const res = await fetch('./data.json?v=' + Date.now(), { cache: 'no-store' });
+      if (!res.ok) throw new Error(res.status);
+      const d = await res.json();
 
-  addEventListener('DOMContentLoaded', () => {
-    animateCount(document.getElementById('inProgressValue'), D.inProgress, 400);
-    animateCount(document.getElementById('holdValue'),       D.hold,       500);
-    animateCount(document.getElementById('doneValue'),       D.done,       600);
-    animateCount(document.getElementById('deleteValue'),     D.delete,     700);
-  });
+      animateCount(document.getElementById('totalValue'),      d.total,      300);
+      animateCount(document.getElementById('inProgressValue'), d.inProgress, 400);
+      animateCount(document.getElementById('holdValue'),       d.hold,       500);
+      animateCount(document.getElementById('doneValue'),       d.done,       600);
+      animateCount(document.getElementById('deleteValue'),     d.deleted,    700);
+    } catch (e) {
+      console.error('data.json 로드 실패:', e);
+    }
+  }
+
+  addEventListener('DOMContentLoaded', loadStats);
 </script>
 </body>
 </html>
