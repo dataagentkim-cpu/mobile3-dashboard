@@ -238,7 +238,24 @@
     }
   }
 
-  addEventListener('DOMContentLoaded', loadStats);
+  // 모바일: notion:// 딥링크로 앱 내 이동, 데스크탑: 새 탭
+  function setupLinks() {
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    document.querySelectorAll('a[href]').forEach(a => {
+      if (isMobile) {
+        a.removeAttribute('target');
+        a.addEventListener('click', e => {
+          e.preventDefault();
+          window.location.href = a.href.replace('https://www.notion.so', 'notion://www.notion.so');
+        });
+      }
+    });
+  }
+
+  addEventListener('DOMContentLoaded', () => {
+    loadStats();
+    setupLinks();
+  });
 </script>
 </body>
 </html>
