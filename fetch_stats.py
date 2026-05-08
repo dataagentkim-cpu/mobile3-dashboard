@@ -29,15 +29,9 @@ HEADERS = {
 }
 
 
-def count_by_status(status_value: str) -> int:
+def query_count(payload: dict) -> int:
     url = f"https://api.notion.com/v1/databases/{DATABASE_ID}/query"
-    payload = {
-        "filter": {
-            "property": STATUS_PROP,
-            "status": {"equals": status_value},
-        },
-        "page_size": 1,
-    }
+    payload = {**payload, "page_size": 100}
     total = 0
     while True:
         res = requests.post(url, headers=HEADERS, json=payload, timeout=15)
@@ -50,12 +44,25 @@ def count_by_status(status_value: str) -> int:
     return total
 
 
+def count_by_status(status_value: str) -> int:
+    return query_count({
+        "filter": {
+            "property": STATUS_PROP,
+            "status": {"equals": status_value},
+        }
+    })
+
+
+def count_total() -> int:
+    return query_count({})
+
+
 def main():
     진행중 = count_by_status("진행중")
     보류   = count_by_status("보류")
     완료   = count_by_status("완료")
     삭제   = count_by_status("삭제")
-    total  = 진행중 + 보류 + 완료 + 삭제
+    total  = count_total()
 
     stats = {
         "total":      total,
