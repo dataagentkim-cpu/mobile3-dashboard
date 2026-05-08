@@ -3,23 +3,43 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+<meta name="color-scheme" content="light dark" />
 <title>Mobile3 Dashboard</title>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+  /* 라이트 모드 */
   :root {
-    --glass-bg:          rgba(255, 255, 255, 0.06);
-    --glass-bg-hover:    rgba(255, 255, 255, 0.09);
-    --glass-border:      rgba(255, 255, 255, 0.11);
-    --glass-border-hover:rgba(255, 255, 255, 0.22);
-    --text-primary:      rgba(255, 255, 255, 0.96);
-    --text-secondary:    rgba(255, 255, 255, 0.58);
-    --text-tertiary:     rgba(255, 255, 255, 0.34);
-    --hero-gradient: linear-gradient(180deg, #fff 0%, rgba(255,255,255,0.60) 100%);
+    --bg:                #f7f6f3;
+    --glass-bg:          rgba(0, 0, 0, 0.05);
+    --glass-bg-hover:    rgba(0, 0, 0, 0.08);
+    --glass-border:      rgba(0, 0, 0, 0.10);
+    --glass-border-hover:rgba(0, 0, 0, 0.20);
+    --text-primary:      rgba(0, 0, 0, 0.88);
+    --text-secondary:    rgba(0, 0, 0, 0.50);
+    --text-tertiary:     rgba(0, 0, 0, 0.30);
+    --hero-gradient:     linear-gradient(180deg, #111 0%, rgba(0,0,0,0.55) 100%);
+    --glow-opacity:      0.25;
+  }
+
+  /* 다크 모드 */
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg:                #191919;
+      --glass-bg:          rgba(255, 255, 255, 0.06);
+      --glass-bg-hover:    rgba(255, 255, 255, 0.09);
+      --glass-border:      rgba(255, 255, 255, 0.11);
+      --glass-border-hover:rgba(255, 255, 255, 0.22);
+      --text-primary:      rgba(255, 255, 255, 0.96);
+      --text-secondary:    rgba(255, 255, 255, 0.58);
+      --text-tertiary:     rgba(255, 255, 255, 0.34);
+      --hero-gradient:     linear-gradient(180deg, #fff 0%, rgba(255,255,255,0.60) 100%);
+      --glow-opacity:      0.45;
+    }
   }
 
   html, body {
-    background: #191919;
+    background: var(--bg);
     color: var(--text-primary);
     font-family: -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
     -webkit-font-smoothing: antialiased;
@@ -113,17 +133,12 @@
   .stat-glow {
     position: absolute; bottom: -30px; right: -20px;
     width: 100px; height: 100px; border-radius: 50%;
-    filter: blur(24px); pointer-events: none; opacity: 0.30;
+    filter: blur(24px); pointer-events: none; opacity: var(--glow-opacity);
   }
   .glow-blue  { background: radial-gradient(circle, #3b82f6, transparent 70%); }
   .glow-amber { background: radial-gradient(circle, #f59e0b, transparent 70%); }
   .glow-green { background: radial-gradient(circle, #10b981, transparent 70%); }
   .glow-red   { background: radial-gradient(circle, #ef4444, transparent 70%); }
-
-  @media (prefers-color-scheme: dark) {
-    .stat-glow { opacity: 0.45; }
-    .hero-glow { opacity: 1; }
-  }
 
   .stat-label {
     position: relative; z-index: 1;
