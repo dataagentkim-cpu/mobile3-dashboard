@@ -7,34 +7,19 @@
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-  /* ── 라이트 모드 (기본) ── */
   :root {
-    --glass-bg:          rgba(0, 0, 0, 0.05);
-    --glass-bg-hover:    rgba(0, 0, 0, 0.08);
-    --glass-border:      rgba(0, 0, 0, 0.10);
-    --glass-border-hover:rgba(0, 0, 0, 0.20);
-    --text-primary:      rgba(0, 0, 0, 0.88);
-    --text-secondary:    rgba(0, 0, 0, 0.50);
-    --text-tertiary:     rgba(0, 0, 0, 0.30);
-    --hero-gradient: linear-gradient(180deg, #111 0%, rgba(0,0,0,0.55) 100%);
-  }
-
-  /* ── 다크 모드 ── */
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --glass-bg:          rgba(255, 255, 255, 0.06);
-      --glass-bg-hover:    rgba(255, 255, 255, 0.09);
-      --glass-border:      rgba(255, 255, 255, 0.11);
-      --glass-border-hover:rgba(255, 255, 255, 0.22);
-      --text-primary:      rgba(255, 255, 255, 0.96);
-      --text-secondary:    rgba(255, 255, 255, 0.58);
-      --text-tertiary:     rgba(255, 255, 255, 0.34);
-      --hero-gradient: linear-gradient(180deg, #fff 0%, rgba(255,255,255,0.60) 100%);
-    }
+    --glass-bg:          rgba(255, 255, 255, 0.06);
+    --glass-bg-hover:    rgba(255, 255, 255, 0.09);
+    --glass-border:      rgba(255, 255, 255, 0.11);
+    --glass-border-hover:rgba(255, 255, 255, 0.22);
+    --text-primary:      rgba(255, 255, 255, 0.96);
+    --text-secondary:    rgba(255, 255, 255, 0.58);
+    --text-tertiary:     rgba(255, 255, 255, 0.34);
+    --hero-gradient: linear-gradient(180deg, #fff 0%, rgba(255,255,255,0.60) 100%);
   }
 
   html, body {
-    background: transparent;
+    background: #191919;
     color: var(--text-primary);
     font-family: -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
     -webkit-font-smoothing: antialiased;
