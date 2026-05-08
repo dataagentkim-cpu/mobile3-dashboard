@@ -17,23 +17,16 @@
     --text-primary: rgba(255, 255, 255, 0.96);
     --text-secondary: rgba(255, 255, 255, 0.60);
     --text-tertiary: rgba(255, 255, 255, 0.36);
-    --safe-top: env(safe-area-inset-top, 0px);
-    --safe-bottom: env(safe-area-inset-bottom, 0px);
-    --safe-left: env(safe-area-inset-left, 0px);
-    --safe-right: env(safe-area-inset-right, 0px);
   }
 
   html, body {
+    height: 100dvh;
+    overflow: hidden;
     background: var(--bg-deep);
     color: var(--text-primary);
     font-family: -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
     -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    min-height: 100vh;
-    min-height: 100dvh;
-    overflow-x: hidden;
     letter-spacing: -0.011em;
-    text-rendering: optimizeLegibility;
   }
 
   .bg-gradient {
@@ -44,15 +37,13 @@
       radial-gradient(at 90% 75%, #ec4899 0px, transparent 45%),
       radial-gradient(at 10% 85%, #06b6d4 0px, transparent 45%);
     filter: saturate(1.15) brightness(0.65);
-    transform: translateZ(0);
-    will-change: transform;
   }
 
-  @media (min-width: 768px) and (prefers-reduced-motion: no-preference) {
+  @media (prefers-reduced-motion: no-preference) {
     .bg-gradient { animation: gradient-shift 24s ease-in-out infinite; }
     @keyframes gradient-shift {
-      0%, 100% { transform: scale(1) rotate(0deg) translateZ(0); }
-      50% { transform: scale(1.05) rotate(1deg) translateZ(0); }
+      0%, 100% { transform: scale(1) rotate(0deg); }
+      50% { transform: scale(1.05) rotate(1deg); }
     }
   }
 
@@ -71,42 +62,10 @@
 
   .container {
     position: relative; z-index: 10;
+    height: 100%;
+    display: flex; flex-direction: column; gap: 8px;
     width: 100%; max-width: 460px; margin: 0 auto;
-    padding:
-      max(20px, var(--safe-top))
-      max(14px, var(--safe-right))
-      max(28px, var(--safe-bottom))
-      max(14px, var(--safe-left));
-  }
-
-  .header {
-    display: flex; align-items: center; justify-content: space-between;
-    margin-bottom: 16px; padding: 0 4px;
-    opacity: 0; animation: fade-in 0.7s 0.05s forwards;
-  }
-
-  .header-title {
-    font-size: 10.5px; font-weight: 500; text-transform: uppercase;
-    letter-spacing: 0.16em; color: var(--text-tertiary);
-  }
-
-  .header-status {
-    display: flex; align-items: center; gap: 6px;
-    font-size: 10.5px; color: var(--text-secondary);
-    font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-weight: 500;
-    letter-spacing: 0.05em;
-  }
-
-  .status-dot {
-    width: 5px; height: 5px; border-radius: 50%;
-    background: #10b981;
-    box-shadow: 0 0 6px #10b981, 0 0 12px rgba(16, 185, 129, 0.5);
-    animation: pulse 2.4s ease-in-out infinite;
-  }
-
-  @keyframes pulse {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.55; transform: scale(0.85); }
+    padding: 12px 14px;
   }
 
   .hero {
@@ -115,15 +74,16 @@
     backdrop-filter: blur(28px) saturate(1.7);
     -webkit-backdrop-filter: blur(28px) saturate(1.7);
     border: 1px solid var(--glass-border);
-    border-radius: 22px;
-    padding: 22px 20px;
-    margin-bottom: 10px;
+    border-radius: 20px;
+    padding: 18px 20px;
     overflow: hidden;
+    flex: 1.2;
     opacity: 0;
-    animation: card-in 0.85s 0.15s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation: card-in 0.85s 0.1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     cursor: pointer;
     transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s, background 0.25s;
-    text-decoration: none; color: inherit; display: block;
+    text-decoration: none; color: inherit;
+    display: flex; align-items: center;
   }
 
   @media (hover: hover) {
@@ -150,15 +110,14 @@
     display: flex; align-items: center; gap: 7px;
     font-size: 11.5px; font-weight: 500;
     color: var(--text-secondary);
-    margin-bottom: 10px;
+    margin-bottom: 8px;
   }
 
   .hero-icon { display: inline-flex; align-items: center; color: var(--text-secondary); }
-
   .hero-number { display: flex; align-items: baseline; gap: 8px; }
 
   .hero-value {
-    font-size: clamp(48px, 14vw, 60px);
+    font-size: clamp(44px, 13vw, 56px);
     font-weight: 700; line-height: 0.95; letter-spacing: -0.04em;
     background: linear-gradient(180deg, #ffffff 0%, rgba(255, 255, 255, 0.62) 100%);
     -webkit-background-clip: text; background-clip: text;
@@ -168,14 +127,9 @@
 
   .hero-unit { font-size: 13px; color: var(--text-tertiary); font-weight: 400; }
 
-  .hero-meta {
-    display: flex; align-items: center; gap: 8px;
-    margin-top: 6px; font-size: 10px; color: var(--text-tertiary);
-    font-family: ui-monospace, 'SF Mono', Menlo, monospace; letter-spacing: 0.04em;
-  }
-
   .stats-grid {
     display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
+    flex: 2;
   }
 
   .stat-card {
@@ -185,13 +139,12 @@
     -webkit-backdrop-filter: blur(24px) saturate(1.5);
     border: 1px solid var(--glass-border);
     border-radius: 16px;
-    padding: 14px 14px 12px;
+    padding: 14px 16px;
     overflow: hidden;
     opacity: 0;
     cursor: pointer;
     transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s, background 0.25s;
     text-decoration: none; color: inherit;
-    min-height: 96px;
     display: flex; flex-direction: column; justify-content: space-between;
   }
 
@@ -206,10 +159,10 @@
     pointer-events: none;
   }
 
-  .stat-card:nth-child(1) { animation: card-in 0.85s 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
-  .stat-card:nth-child(2) { animation: card-in 0.85s 0.36s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
-  .stat-card:nth-child(3) { animation: card-in 0.85s 0.44s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
-  .stat-card:nth-child(4) { animation: card-in 0.85s 0.52s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+  .stat-card:nth-child(1) { animation: card-in 0.85s 0.20s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+  .stat-card:nth-child(2) { animation: card-in 0.85s 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+  .stat-card:nth-child(3) { animation: card-in 0.85s 0.36s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+  .stat-card:nth-child(4) { animation: card-in 0.85s 0.44s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
 
   .stat-glow {
     position: absolute; bottom: -35px; right: -25px;
@@ -221,11 +174,7 @@
   .glow-green { background: radial-gradient(circle, #10b981, transparent 70%); }
   .glow-slate { background: radial-gradient(circle, #94a3b8, transparent 70%); }
 
-  .stat-content {
-    position: relative; z-index: 1; flex: 1;
-    display: flex; flex-direction: column; justify-content: space-between;
-  }
-  .stat-top { display: flex; flex-direction: column; gap: 8px; }
+  .stat-content { position: relative; z-index: 1; height: 100%; display: flex; flex-direction: column; justify-content: space-between; }
 
   .stat-label {
     display: flex; align-items: center; gap: 6px;
@@ -239,43 +188,19 @@
   .dot-slate { background: #94a3b8; box-shadow: 0 0 5px #94a3b8; }
 
   .stat-value {
-    font-size: clamp(28px, 8.5vw, 34px);
+    font-size: clamp(30px, 9vw, 38px);
     font-weight: 700; line-height: 0.95;
     letter-spacing: -0.03em; color: var(--text-primary);
     font-feature-settings: 'tnum' 1;
-  }
-
-  .stat-meta {
-    display: flex; align-items: center; justify-content: space-between;
-    margin-top: 8px; font-size: 9.5px; color: var(--text-tertiary);
-    font-family: ui-monospace, 'SF Mono', Menlo, monospace; letter-spacing: 0.05em;
-  }
-
-  .stat-arrow { font-size: 11px; transition: transform 0.25s; }
-  .stat-card:active .stat-arrow { transform: translateX(2px); }
-
-  .footer {
-    margin-top: 14px; text-align: center;
-    font-size: 9.5px; color: var(--text-tertiary);
-    font-family: ui-monospace, 'SF Mono', Menlo, monospace; letter-spacing: 0.06em;
-    opacity: 0; animation: fade-in 0.7s 0.65s forwards;
   }
 
   @keyframes card-in {
     from { opacity: 0; transform: translateY(16px) scale(0.97); }
     to { opacity: 1; transform: translateY(0) scale(1); }
   }
-  @keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
 
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
-  }
-
-  @media (max-width: 360px) {
-    .container { padding-left: 12px; padding-right: 12px; }
-    .hero { padding: 18px 16px; }
-    .stat-card { padding: 12px 12px 10px; min-height: 88px; }
-    .stats-grid { gap: 7px; }
   }
 </style>
 </head>
@@ -285,14 +210,6 @@
   <div class="bg-grain"></div>
 
   <div class="container">
-    <div class="header">
-      <div class="header-title">MOBILE3 · TASK BOARD</div>
-      <div class="header-status">
-        <span class="status-dot"></span>
-        <span>NOTION</span>
-      </div>
-    </div>
-
     <a class="hero" href="https://www.notion.so/35a056cc7000812fa6d7c10bbaa60945" target="_blank" rel="noopener">
       <div class="hero-glow"></div>
       <div class="hero-content">
@@ -306,9 +223,6 @@
           <span class="hero-value" id="totalValue">97</span>
           <span class="hero-unit">건</span>
         </div>
-        <div class="hero-meta">
-          <span id="lastUpdated">UPDATED <span id="updatedTime"></span></span>
-        </div>
       </div>
     </a>
 
@@ -316,49 +230,35 @@
       <a class="stat-card" href="https://www.notion.so/35a056cc7000812b85c0fd61d3e40a5d" target="_blank" rel="noopener">
         <div class="stat-glow glow-blue"></div>
         <div class="stat-content">
-          <div class="stat-top">
-            <div class="stat-label"><span class="stat-dot dot-blue"></span><span>진행 중</span></div>
-            <div class="stat-value" id="inProgressValue">15</div>
-          </div>
-          <div class="stat-meta"><span>IN PROGRESS</span><span class="stat-arrow">→</span></div>
+          <div class="stat-label"><span class="stat-dot dot-blue"></span><span>진행 중</span></div>
+          <div class="stat-value" id="inProgressValue">15</div>
         </div>
       </a>
 
       <a class="stat-card" href="https://www.notion.so/35a056cc700081309c8ef8844b5bf38c" target="_blank" rel="noopener">
         <div class="stat-glow glow-amber"></div>
         <div class="stat-content">
-          <div class="stat-top">
-            <div class="stat-label"><span class="stat-dot dot-amber"></span><span>보류</span></div>
-            <div class="stat-value" id="holdValue">3</div>
-          </div>
-          <div class="stat-meta"><span>ON HOLD</span><span class="stat-arrow">→</span></div>
+          <div class="stat-label"><span class="stat-dot dot-amber"></span><span>보류</span></div>
+          <div class="stat-value" id="holdValue">3</div>
         </div>
       </a>
 
       <a class="stat-card" href="https://www.notion.so/35a056cc7000814eb001e0e84129d32b" target="_blank" rel="noopener">
         <div class="stat-glow glow-green"></div>
         <div class="stat-content">
-          <div class="stat-top">
-            <div class="stat-label"><span class="stat-dot dot-green"></span><span>완료</span></div>
-            <div class="stat-value" id="doneValue">4</div>
-          </div>
-          <div class="stat-meta"><span>COMPLETED</span><span class="stat-arrow">→</span></div>
+          <div class="stat-label"><span class="stat-dot dot-green"></span><span>완료</span></div>
+          <div class="stat-value" id="doneValue">4</div>
         </div>
       </a>
 
       <a class="stat-card" href="https://www.notion.so/35a056cc7000812fa6d7c10bbaa60945" target="_blank" rel="noopener">
         <div class="stat-glow glow-slate"></div>
         <div class="stat-content">
-          <div class="stat-top">
-            <div class="stat-label"><span class="stat-dot dot-slate"></span><span>대기 / 기타</span></div>
-            <div class="stat-value" id="pendingValue">75</div>
-          </div>
-          <div class="stat-meta"><span>BACKLOG</span><span class="stat-arrow">→</span></div>
+          <div class="stat-label"><span class="stat-dot dot-slate"></span><span>대기 / 기타</span></div>
+          <div class="stat-value" id="pendingValue">75</div>
         </div>
       </a>
     </div>
-
-    <div class="footer" id="footerText">SYNCED FROM NOTION · MOBILE3</div>
   </div>
 
 <script>
@@ -366,12 +266,10 @@
     setTimeout(() => {
       const duration = 1100;
       const startTime = performance.now();
-      const start = 0;
-      const diff = target - start;
       function update(now) {
         const progress = Math.min((now - startTime) / duration, 1);
         const eased = 1 - Math.pow(1 - progress, 3);
-        el.textContent = Math.floor(start + diff * eased);
+        el.textContent = Math.floor(target * eased);
         if (progress < 1) requestAnimationFrame(update);
         else el.textContent = target;
       }
@@ -379,24 +277,16 @@
     }, delay);
   }
 
-  function formatTime(date) {
-    const h = String(date.getHours()).padStart(2, '0');
-    const m = String(date.getMinutes()).padStart(2, '0');
-    return `${h}:${m}`;
-  }
-
   const DATA = { total: 97, inProgress: 15, hold: 3, done: 4, pending: 75 };
 
   window.addEventListener('DOMContentLoaded', () => {
-    document.getElementById('updatedTime').textContent = formatTime(new Date());
-
     setTimeout(() => {
       animateCount(document.getElementById('totalValue'),      DATA.total,      0);
       animateCount(document.getElementById('inProgressValue'), DATA.inProgress, 70);
       animateCount(document.getElementById('holdValue'),       DATA.hold,       140);
       animateCount(document.getElementById('doneValue'),       DATA.done,       210);
       animateCount(document.getElementById('pendingValue'),    DATA.pending,    280);
-    }, 600);
+    }, 400);
   });
 </script>
 </body>
