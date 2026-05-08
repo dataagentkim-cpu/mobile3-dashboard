@@ -2,26 +2,24 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
 <meta name="theme-color" content="#0a0a14" />
 <title>Mobile3 Dashboard</title>
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
     --bg-deep: #0a0a14;
-    --glass-bg: rgba(255, 255, 255, 0.05);
-    --glass-bg-hover: rgba(255, 255, 255, 0.08);
-    --glass-border: rgba(255, 255, 255, 0.10);
-    --glass-border-hover: rgba(255, 255, 255, 0.20);
-    --text-primary: rgba(255, 255, 255, 0.96);
-    --text-secondary: rgba(255, 255, 255, 0.60);
-    --text-tertiary: rgba(255, 255, 255, 0.36);
+    --glass-bg: rgba(255,255,255,0.06);
+    --glass-bg-hover: rgba(255,255,255,0.09);
+    --glass-border: rgba(255,255,255,0.11);
+    --glass-border-hover: rgba(255,255,255,0.22);
+    --text-primary: rgba(255,255,255,0.96);
+    --text-secondary: rgba(255,255,255,0.58);
+    --text-tertiary: rgba(255,255,255,0.34);
   }
 
   html, body {
-    height: 100dvh;
-    overflow: hidden;
     background: var(--bg-deep);
     color: var(--text-primary);
     font-family: -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
@@ -33,18 +31,10 @@
     position: fixed; inset: 0; z-index: 0;
     background:
       radial-gradient(at 15% 15%, #6366f1 0px, transparent 45%),
-      radial-gradient(at 85% 5%, #8b5cf6 0px, transparent 50%),
+      radial-gradient(at 85% 5%,  #8b5cf6 0px, transparent 50%),
       radial-gradient(at 90% 75%, #ec4899 0px, transparent 45%),
       radial-gradient(at 10% 85%, #06b6d4 0px, transparent 45%);
     filter: saturate(1.15) brightness(0.65);
-  }
-
-  @media (prefers-reduced-motion: no-preference) {
-    .bg-gradient { animation: gradient-shift 24s ease-in-out infinite; }
-    @keyframes gradient-shift {
-      0%, 100% { transform: scale(1) rotate(0deg); }
-      50% { transform: scale(1.05) rotate(1deg); }
-    }
   }
 
   .bg-overlay {
@@ -53,130 +43,111 @@
     pointer-events: none;
   }
 
-  .bg-grain {
-    position: fixed; inset: 0; z-index: 2;
-    opacity: 0.025; pointer-events: none;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-    mix-blend-mode: overlay;
-  }
-
   .container {
     position: relative; z-index: 10;
-    height: 100%;
+    width: 100%;
+    padding: 12px 12px 14px;
     display: flex; flex-direction: column; gap: 8px;
-    width: 100%; max-width: 460px; margin: 0 auto;
-    padding: 12px 14px;
   }
 
+  /* 전체 과제 */
   .hero {
     position: relative;
     background: var(--glass-bg);
-    backdrop-filter: blur(28px) saturate(1.7);
-    -webkit-backdrop-filter: blur(28px) saturate(1.7);
     border: 1px solid var(--glass-border);
-    border-radius: 20px;
-    padding: 18px 20px;
+    border-radius: 18px;
+    padding: 16px 18px;
     overflow: hidden;
-    flex: 1.2;
     opacity: 0;
-    animation: card-in 0.85s 0.1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-    cursor: pointer;
-    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s, background 0.25s;
-    text-decoration: none; color: inherit;
-    display: flex; align-items: center;
+    animation: card-in 0.7s 0.05s cubic-bezier(0.16,1,0.3,1) forwards;
+    text-decoration: none; color: inherit; display: block;
+    transition: border-color 0.2s, background 0.2s;
   }
-
+  .hero:active { opacity: 0.85; }
   @media (hover: hover) {
-    .hero:hover { transform: translateY(-2px); border-color: var(--glass-border-hover); background: var(--glass-bg-hover); }
+    .hero:hover { border-color: var(--glass-border-hover); background: var(--glass-bg-hover); }
   }
-  .hero:active { transform: scale(0.99); }
 
   .hero::before {
     content: ''; position: absolute; inset: 0;
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.07) 0%, transparent 55%);
+    background: linear-gradient(135deg, rgba(255,255,255,0.07) 0%, transparent 55%);
     pointer-events: none;
   }
 
   .hero-glow {
-    position: absolute; top: -30%; right: -15%;
-    width: 220px; height: 220px; border-radius: 50%;
-    background: radial-gradient(circle, rgba(139, 92, 246, 0.45), transparent 65%);
-    filter: blur(35px); pointer-events: none;
+    position: absolute; top: -40%; right: -10%;
+    width: 180px; height: 180px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(139,92,246,0.4), transparent 65%);
+    filter: blur(30px); pointer-events: none;
   }
 
   .hero-content { position: relative; z-index: 1; }
 
   .hero-label {
-    display: flex; align-items: center; gap: 7px;
-    font-size: 11.5px; font-weight: 500;
-    color: var(--text-secondary);
-    margin-bottom: 8px;
+    display: flex; align-items: center; gap: 6px;
+    font-size: 11px; font-weight: 500; color: var(--text-secondary);
+    margin-bottom: 6px;
   }
 
-  .hero-icon { display: inline-flex; align-items: center; color: var(--text-secondary); }
-  .hero-number { display: flex; align-items: baseline; gap: 8px; }
+  .hero-number { display: flex; align-items: baseline; gap: 7px; }
 
   .hero-value {
-    font-size: clamp(44px, 13vw, 56px);
-    font-weight: 700; line-height: 0.95; letter-spacing: -0.04em;
-    background: linear-gradient(180deg, #ffffff 0%, rgba(255, 255, 255, 0.62) 100%);
+    font-size: 52px; font-weight: 700; line-height: 1; letter-spacing: -0.04em;
+    background: linear-gradient(180deg, #fff 0%, rgba(255,255,255,0.6) 100%);
     -webkit-background-clip: text; background-clip: text;
     -webkit-text-fill-color: transparent;
     font-feature-settings: 'tnum' 1;
   }
 
-  .hero-unit { font-size: 13px; color: var(--text-tertiary); font-weight: 400; }
+  .hero-unit { font-size: 13px; color: var(--text-tertiary); }
 
+  /* 2×2 그리드 */
   .stats-grid {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
-    flex: 2;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
   }
 
   .stat-card {
     position: relative;
     background: var(--glass-bg);
-    backdrop-filter: blur(24px) saturate(1.5);
-    -webkit-backdrop-filter: blur(24px) saturate(1.5);
     border: 1px solid var(--glass-border);
-    border-radius: 16px;
-    padding: 14px 16px;
+    border-radius: 14px;
+    padding: 13px 14px 11px;
     overflow: hidden;
     opacity: 0;
-    cursor: pointer;
-    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s, background 0.25s;
     text-decoration: none; color: inherit;
-    display: flex; flex-direction: column; justify-content: space-between;
+    transition: border-color 0.2s, background 0.2s;
+    display: flex; flex-direction: column; gap: 10px;
   }
-
+  .stat-card:active { opacity: 0.8; }
   @media (hover: hover) {
-    .stat-card:hover { transform: translateY(-2px); border-color: var(--glass-border-hover); background: var(--glass-bg-hover); }
+    .stat-card:hover { border-color: var(--glass-border-hover); background: var(--glass-bg-hover); }
   }
-  .stat-card:active { transform: scale(0.98); }
 
   .stat-card::before {
     content: ''; position: absolute; inset: 0;
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, transparent 50%);
+    background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, transparent 50%);
     pointer-events: none;
   }
 
-  .stat-card:nth-child(1) { animation: card-in 0.85s 0.20s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
-  .stat-card:nth-child(2) { animation: card-in 0.85s 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
-  .stat-card:nth-child(3) { animation: card-in 0.85s 0.36s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
-  .stat-card:nth-child(4) { animation: card-in 0.85s 0.44s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+  .stat-card:nth-child(1) { animation: card-in 0.7s 0.12s cubic-bezier(0.16,1,0.3,1) forwards; }
+  .stat-card:nth-child(2) { animation: card-in 0.7s 0.18s cubic-bezier(0.16,1,0.3,1) forwards; }
+  .stat-card:nth-child(3) { animation: card-in 0.7s 0.24s cubic-bezier(0.16,1,0.3,1) forwards; }
+  .stat-card:nth-child(4) { animation: card-in 0.7s 0.30s cubic-bezier(0.16,1,0.3,1) forwards; }
 
   .stat-glow {
-    position: absolute; bottom: -35px; right: -25px;
-    width: 110px; height: 110px; border-radius: 50%;
-    filter: blur(28px); pointer-events: none; opacity: 0.5;
+    position: absolute; bottom: -30px; right: -20px;
+    width: 90px; height: 90px; border-radius: 50%;
+    filter: blur(22px); pointer-events: none; opacity: 0.45;
   }
   .glow-blue  { background: radial-gradient(circle, #3b82f6, transparent 70%); }
   .glow-amber { background: radial-gradient(circle, #f59e0b, transparent 70%); }
   .glow-green { background: radial-gradient(circle, #10b981, transparent 70%); }
   .glow-slate { background: radial-gradient(circle, #94a3b8, transparent 70%); }
 
-  .stat-content { position: relative; z-index: 1; height: 100%; display: flex; flex-direction: column; justify-content: space-between; }
-
   .stat-label {
+    position: relative; z-index: 1;
     display: flex; align-items: center; gap: 6px;
     font-size: 11px; font-weight: 500; color: var(--text-secondary);
   }
@@ -188,35 +159,32 @@
   .dot-slate { background: #94a3b8; box-shadow: 0 0 5px #94a3b8; }
 
   .stat-value {
-    font-size: clamp(30px, 9vw, 38px);
-    font-weight: 700; line-height: 0.95;
+    position: relative; z-index: 1;
+    font-size: 34px; font-weight: 700; line-height: 1;
     letter-spacing: -0.03em; color: var(--text-primary);
     font-feature-settings: 'tnum' 1;
   }
 
   @keyframes card-in {
-    from { opacity: 0; transform: translateY(16px) scale(0.97); }
-    to { opacity: 1; transform: translateY(0) scale(1); }
+    from { opacity: 0; transform: translateY(12px) scale(0.97); }
+    to   { opacity: 1; transform: translateY(0)   scale(1);    }
   }
 
   @media (prefers-reduced-motion: reduce) {
-    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+    * { animation-duration: 0.01ms !important; }
   }
 </style>
 </head>
 <body>
   <div class="bg-gradient"></div>
   <div class="bg-overlay"></div>
-  <div class="bg-grain"></div>
 
   <div class="container">
     <a class="hero" href="https://www.notion.so/35a056cc7000812fa6d7c10bbaa60945" target="_blank" rel="noopener">
       <div class="hero-glow"></div>
       <div class="hero-content">
         <div class="hero-label">
-          <span class="hero-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><path d="M3 9.5L12 4l9 5.5"/><path d="M5 10v8a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-8"/></svg>
-          </span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><path d="M3 9.5L12 4l9 5.5"/><path d="M5 10v8a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-8"/></svg>
           <span>전체 과제 · Total</span>
         </div>
         <div class="hero-number">
@@ -229,64 +197,50 @@
     <div class="stats-grid">
       <a class="stat-card" href="https://www.notion.so/35a056cc7000812b85c0fd61d3e40a5d" target="_blank" rel="noopener">
         <div class="stat-glow glow-blue"></div>
-        <div class="stat-content">
-          <div class="stat-label"><span class="stat-dot dot-blue"></span><span>진행 중</span></div>
-          <div class="stat-value" id="inProgressValue">15</div>
-        </div>
+        <div class="stat-label"><span class="stat-dot dot-blue"></span>진행 중</div>
+        <div class="stat-value" id="inProgressValue">15</div>
       </a>
 
       <a class="stat-card" href="https://www.notion.so/35a056cc700081309c8ef8844b5bf38c" target="_blank" rel="noopener">
         <div class="stat-glow glow-amber"></div>
-        <div class="stat-content">
-          <div class="stat-label"><span class="stat-dot dot-amber"></span><span>보류</span></div>
-          <div class="stat-value" id="holdValue">3</div>
-        </div>
+        <div class="stat-label"><span class="stat-dot dot-amber"></span>보류</div>
+        <div class="stat-value" id="holdValue">3</div>
       </a>
 
       <a class="stat-card" href="https://www.notion.so/35a056cc7000814eb001e0e84129d32b" target="_blank" rel="noopener">
         <div class="stat-glow glow-green"></div>
-        <div class="stat-content">
-          <div class="stat-label"><span class="stat-dot dot-green"></span><span>완료</span></div>
-          <div class="stat-value" id="doneValue">4</div>
-        </div>
+        <div class="stat-label"><span class="stat-dot dot-green"></span>완료</div>
+        <div class="stat-value" id="doneValue">4</div>
       </a>
 
       <a class="stat-card" href="https://www.notion.so/35a056cc7000812fa6d7c10bbaa60945" target="_blank" rel="noopener">
         <div class="stat-glow glow-slate"></div>
-        <div class="stat-content">
-          <div class="stat-label"><span class="stat-dot dot-slate"></span><span>대기 / 기타</span></div>
-          <div class="stat-value" id="pendingValue">75</div>
-        </div>
+        <div class="stat-label"><span class="stat-dot dot-slate"></span>대기 / 기타</div>
+        <div class="stat-value" id="pendingValue">75</div>
       </a>
     </div>
   </div>
 
 <script>
-  function animateCount(el, target, delay = 0) {
+  function animateCount(el, target, delay) {
     setTimeout(() => {
-      const duration = 1100;
-      const startTime = performance.now();
-      function update(now) {
-        const progress = Math.min((now - startTime) / duration, 1);
-        const eased = 1 - Math.pow(1 - progress, 3);
-        el.textContent = Math.floor(target * eased);
-        if (progress < 1) requestAnimationFrame(update);
+      const duration = 900, start = performance.now();
+      (function tick(now) {
+        const p = Math.min((now - start) / duration, 1);
+        el.textContent = Math.floor(target * (1 - Math.pow(1 - p, 3)));
+        if (p < 1) requestAnimationFrame(tick);
         else el.textContent = target;
-      }
-      requestAnimationFrame(update);
+      })(start);
     }, delay);
   }
 
-  const DATA = { total: 97, inProgress: 15, hold: 3, done: 4, pending: 75 };
-
-  window.addEventListener('DOMContentLoaded', () => {
-    setTimeout(() => {
-      animateCount(document.getElementById('totalValue'),      DATA.total,      0);
-      animateCount(document.getElementById('inProgressValue'), DATA.inProgress, 70);
-      animateCount(document.getElementById('holdValue'),       DATA.hold,       140);
-      animateCount(document.getElementById('doneValue'),       DATA.done,       210);
-      animateCount(document.getElementById('pendingValue'),    DATA.pending,    280);
-    }, 400);
+  const D = { total: 97, inProgress: 15, hold: 3, done: 4, pending: 75 };
+  addEventListener('DOMContentLoaded', () => {
+    animateCount(document.getElementById('totalValue'),      D.total,      300);
+    animateCount(document.getElementById('inProgressValue'), D.inProgress, 370);
+    animateCount(document.getElementById('holdValue'),       D.hold,       440);
+    animateCount(document.getElementById('doneValue'),       D.done,       510);
+    animateCount(document.getElementById('pendingValue'),    D.pending,    580);
   });
 </script>
 </body>
