@@ -9,6 +9,7 @@ NOTION_DATABASE_ID: 전략과제 DB의 Notion 페이지 ID
 
 import json
 import os
+import re
 import sys
 from datetime import datetime, timezone
 
@@ -73,11 +74,24 @@ def main():
         "updatedAt":  datetime.now(timezone.utc).isoformat(),
     }
 
-    out_path = os.path.join(os.path.dirname(__file__), "data.json")
+    base = os.path.dirname(__file__)
+
+    out_path = os.path.join(base, "data.json")
     with open(out_path, "w", encoding="utf-8") as f:
         json.dump(stats, f, ensure_ascii=False, indent=2)
 
-    print(f"✅ data.json 업데이트: {stats}")
+    html_path = os.path.join(base, "index.html")
+    with open(html_path, "r", encoding="utf-8") as f:
+        html = f.read()
+    new_line = (
+        f'  var STATS = {{total:{total},inProgress:{진행중},'
+        f'hold:{보류},done:{완료},deleted:{삭제}}}; // @@STATS@@'
+    )
+    html = re.sub(r'  var STATS = \{[^}]+\}; // @@STATS@@', new_line, html)
+    with open(html_path, "w", encoding="utf-8") as f:
+        f.write(html)
+
+    print(f"✅ data.json + index.html 업데이트: {stats}")
 
 
 if __name__ == "__main__":
