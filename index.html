@@ -282,7 +282,17 @@
     animateCount(document.getElementById('deleteValue'),     d.deleted,    700);
   }
 
-  addEventListener('DOMContentLoaded', loadStats);
+  function setupLinks() {
+    var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    if (!isMobile) {
+      document.querySelectorAll('a[href]').forEach(function(a) {
+        a.setAttribute('target', '_blank');
+        a.setAttribute('rel', 'noopener');
+      });
+    }
+  }
+
+  addEventListener('DOMContentLoaded', function() { loadStats(); setupLinks(); });
 </script>
 </body>
 </html>
