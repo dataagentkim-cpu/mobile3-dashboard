@@ -240,16 +240,15 @@
   var STATS = {total:97,inProgress:83,hold:3,done:4,deleted:3}; // @@STATS@@
 
   function animateCount(el, target, delay) {
-    setTimeout(() => {
+    setTimeout(function() {
       el.innerHTML = '';
-      const duration = 2500;
-      const start = performance.now();
-      (function tick(now) {
-        const p = Math.min((now - start) / duration, 1);
+      var duration = 2500;
+      var start = Date.now();
+      var timer = setInterval(function() {
+        var p = Math.min((Date.now() - start) / duration, 1);
         el.textContent = Math.floor(target * (1 - Math.pow(1 - p, 2.5)));
-        if (p < 1) requestAnimationFrame(tick);
-        else el.textContent = target;
-      })(start);
+        if (p >= 1) { el.textContent = target; clearInterval(timer); }
+      }, 16);
     }, delay);
   }
 
