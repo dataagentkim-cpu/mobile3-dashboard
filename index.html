@@ -264,19 +264,13 @@
 
   function setupLinks() {
     var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-    document.querySelectorAll('a[href]').forEach(function(a) {
-      if (isMobile) {
-        a.removeAttribute('target');
-        a.addEventListener('click', function(e) {
-          e.preventDefault();
-          // notion:// 딥링크: 앱이 새 페이지를 스택에 push → 뒤로가기 정상 작동
-          window.location.href = a.href.replace('https://www.notion.so', 'notion://www.notion.so');
-        });
-      } else {
+    if (!isMobile) {
+      document.querySelectorAll('a[href]').forEach(function(a) {
         a.setAttribute('target', '_blank');
         a.setAttribute('rel', 'noopener');
-      }
-    });
+      });
+    }
+    // 모바일: target="_top" 유지 (HTML 기본값) — Notion WKWebView에서 가장 안정적
   }
 
   addEventListener('DOMContentLoaded', function() { loadStats(); setupLinks(); });
