@@ -264,13 +264,18 @@
 
   function setupLinks() {
     var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-    if (!isMobile) {
-      document.querySelectorAll('a[href]').forEach(function(a) {
+    document.querySelectorAll('a[href]').forEach(function(a) {
+      if (isMobile) {
+        a.removeAttribute('target');
+        a.addEventListener('click', function(e) {
+          e.preventDefault();
+          window.top.location.href = a.href; // HTML target=_top 보다 확실
+        });
+      } else {
         a.setAttribute('target', '_blank');
         a.setAttribute('rel', 'noopener');
-      });
-    }
-    // 모바일: target="_top" 유지 (HTML 기본값) — Notion WKWebView에서 가장 안정적
+      }
+    });
   }
 
   addEventListener('DOMContentLoaded', function() { loadStats(); setupLinks(); });
