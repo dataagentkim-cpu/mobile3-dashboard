@@ -180,7 +180,7 @@
 </head>
 <body>
   <div class="container">
-    <a class="hero" href="https://www.notion.so/116296d07fca40fa978d5cc2a3c78eb0?v=337056cc7000803f99ad000c968ac036" target="_top">
+    <a class="hero" href="https://www.notion.so/116296d07fca40fa978d5cc2a3c78eb0?v=337056cc7000803f99ad000c968ac036" target="_blank" rel="noopener">
       <div class="hero-glow"></div>
 
       <!-- 한화 Lifeplus 공식 로고 (lifeplus.co.kr) -->
@@ -201,7 +201,7 @@
     </a>
 
     <div class="stats-grid">
-      <a class="stat-card" href="https://www.notion.so/116296d07fca40fa978d5cc2a3c78eb0?v=39746c3a08b94c6bbba5d08438a680ae" target="_top">
+      <a class="stat-card" href="https://www.notion.so/116296d07fca40fa978d5cc2a3c78eb0?v=39746c3a08b94c6bbba5d08438a680ae" target="_blank" rel="noopener">
         <div class="stat-glow glow-blue"></div>
         <div class="stat-label">
           <svg class="stat-icon icon-blue" viewBox="0 0 24 24" width="13" height="13" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
@@ -209,7 +209,7 @@
         </div>
         <div class="stat-value" id="inProgressValue"><span class="loading-text">…</span></div>
       </a>
-      <a class="stat-card" href="https://www.notion.so/116296d07fca40fa978d5cc2a3c78eb0?v=48f8c810faed454b86bd858239c331d1" target="_top">
+      <a class="stat-card" href="https://www.notion.so/116296d07fca40fa978d5cc2a3c78eb0?v=48f8c810faed454b86bd858239c331d1" target="_blank" rel="noopener">
         <div class="stat-glow glow-amber"></div>
         <div class="stat-label">
           <svg class="stat-icon icon-amber" viewBox="0 0 24 24" width="13" height="13" fill="currentColor"><rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/></svg>
@@ -217,7 +217,7 @@
         </div>
         <div class="stat-value" id="holdValue"><span class="loading-text">…</span></div>
       </a>
-      <a class="stat-card" href="https://www.notion.so/116296d07fca40fa978d5cc2a3c78eb0?v=c0eca2b7ebcd47179b740c7499a1a9b6" target="_top">
+      <a class="stat-card" href="https://www.notion.so/116296d07fca40fa978d5cc2a3c78eb0?v=c0eca2b7ebcd47179b740c7499a1a9b6" target="_blank" rel="noopener">
         <div class="stat-glow glow-green"></div>
         <div class="stat-label">
           <svg class="stat-icon icon-green" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20,6 9,17 4,12"/></svg>
@@ -225,7 +225,7 @@
         </div>
         <div class="stat-value" id="doneValue"><span class="loading-text">…</span></div>
       </a>
-      <a class="stat-card" href="https://www.notion.so/116296d07fca40fa978d5cc2a3c78eb0?v=fc272ce609ae4a7fb791fda70fbb3d87" target="_top">
+      <a class="stat-card" href="https://www.notion.so/116296d07fca40fa978d5cc2a3c78eb0?v=fc272ce609ae4a7fb791fda70fbb3d87" target="_blank" rel="noopener">
         <div class="stat-glow glow-red"></div>
         <div class="stat-label">
           <svg class="stat-icon icon-red" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3,6 5,6 21,6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>
@@ -286,11 +286,7 @@
           }
           // navigator.share 없으면 target 속성 그대로 두어 기본 동작
         });
-      } else {
-        // PC: sandbox 우회 불가 → target=_blank 새 탭 (확실히 동작)
-        a.setAttribute('target', '_blank');
-        a.setAttribute('rel', 'noopener');
-      }
+      // PC: HTML target=_blank 기본값 유지 — JS 개입 없음
     });
   }
 
