@@ -273,8 +273,8 @@
           e.preventDefault();
           window.top.location.href = a.href;
         });
-      } else if (!isMobile) {
-        // PC: 새 탭 열고 바로 포커스 이동
+      } else {
+        // PC / iOS / iPad: 새 탭 열고 포커스 이동
         a.removeAttribute('target');
         a.addEventListener('click', function(e) {
           e.preventDefault();
@@ -282,7 +282,6 @@
           if (w) w.focus();
         });
       }
-      // iOS/iPad: target=_blank 그대로 (Safari 외부 열기)
     });
   }
 
