@@ -262,26 +262,7 @@
     animateCount(document.getElementById('deleteValue'),     d.deleted,    700);
   }
 
-  function setupLinks() {
-    var ua = navigator.userAgent;
-    var isAndroid = /Android/i.test(ua);
-
-    document.querySelectorAll('a[href]').forEach(function(a) {
-      if (isAndroid) {
-        a.removeAttribute('target');
-        a.addEventListener('click', function(e) {
-          e.preventDefault();
-          window.top.location.href = a.href;
-        });
-      } else {
-        // iOS / PC: 외부 링크로 새 탭/Safari 열기
-        a.setAttribute('target', '_blank');
-        a.setAttribute('rel', 'noopener');
-      }
-    });
-  }
-
-  addEventListener('DOMContentLoaded', function() { loadStats(); setupLinks(); });
+  addEventListener('DOMContentLoaded', loadStats);
 </script>
 </body>
 </html>
