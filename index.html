@@ -273,8 +273,15 @@
           e.preventDefault();
           window.top.location.href = a.href;
         });
+      } else if (!isMobile) {
+        // PC: 현재 탭에서 바로 이동
+        a.removeAttribute('target');
+        a.addEventListener('click', function(e) {
+          e.preventDefault();
+          window.open(a.href, '_top');
+        });
       } else {
-        // PC / iOS / iPad: 새 탭 열고 포커스 이동
+        // iOS / iPad: 새 탭(Safari) 열고 포커스
         a.removeAttribute('target');
         a.addEventListener('click', function(e) {
           e.preventDefault();
