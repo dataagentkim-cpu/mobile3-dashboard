@@ -262,7 +262,19 @@
     animateCount(document.getElementById('deleteValue'),     d.deleted,    700);
   }
 
-  addEventListener('DOMContentLoaded', loadStats);
+  function setupLinks() {
+    if (/Android/i.test(navigator.userAgent)) {
+      document.querySelectorAll('a[href]').forEach(function(a) {
+        a.removeAttribute('target');
+        a.addEventListener('click', function(e) {
+          e.preventDefault();
+          window.top.location.href = a.href;
+        });
+      });
+    }
+  }
+
+  addEventListener('DOMContentLoaded', function() { loadStats(); setupLinks(); });
 </script>
 </body>
 </html>
