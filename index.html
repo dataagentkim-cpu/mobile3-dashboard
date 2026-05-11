@@ -263,15 +263,23 @@
   }
 
   function setupLinks() {
-    var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    var ua = navigator.userAgent;
+    var isIOS     = /iPhone|iPad|iPod/i.test(ua);
+    var isAndroid = /Android/i.test(ua);
+
     document.querySelectorAll('a[href]').forEach(function(a) {
-      if (isMobile) {
+      if (isAndroid) {
+        // Android: JS로 직접 top 이동 (declarative target 무시 방지)
         a.removeAttribute('target');
         a.addEventListener('click', function(e) {
           e.preventDefault();
-          window.top.location.href = a.href; // HTML target=_top 보다 확실
+          window.top.location.href = a.href;
         });
+      } else if (isIOS) {
+        // iOS: target="_top" 선언적 방식 유지
+        // → Notion이 linkActivated로 인식해 앱 내 네이티브 이동
       } else {
+        // PC: 새 탭
         a.setAttribute('target', '_blank');
         a.setAttribute('rel', 'noopener');
       }
