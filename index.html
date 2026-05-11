@@ -269,15 +269,26 @@
 
     document.querySelectorAll('a[href]').forEach(function(a) {
       if (isAndroid) {
-        // Android: JS로 직접 top 이동 (declarative target 무시 방지)
+        // Android: JS로 직접 top 이동
         a.removeAttribute('target');
         a.addEventListener('click', function(e) {
           e.preventDefault();
           window.top.location.href = a.href;
         });
       } else if (isIOS) {
-        // iOS: target="_top" 선언적 방식 유지
-        // → Notion이 linkActivated로 인식해 앱 내 네이티브 이동
+        // iOS: 실제 <a href="notion://..."> 엘리먼트를 JS로 클릭
+        // → WebKit이 linkActivated 타입으로 전달 → Notion이 네이티브로 인터셉트 가능
+        a.removeAttribute('target');
+        a.addEventListener('click', function(e) {
+          e.preventDefault();
+          var notionUrl = a.href.replace('https://www.notion.so', 'notion://www.notion.so');
+          var tmp = document.createElement('a');
+          tmp.href = notionUrl;
+          tmp.style.display = 'none';
+          document.body.appendChild(tmp);
+          tmp.click();
+          document.body.removeChild(tmp);
+        });
       } else {
         // PC: 새 탭
         a.setAttribute('target', '_blank');
