@@ -263,20 +263,28 @@
   }
 
   function setupLinks() {
-    var isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
-    if (isIOS) {
-      document.querySelectorAll('a[href]').forEach(function(a) {
+    var ua = navigator.userAgent;
+    var isIOS     = /iPhone|iPad|iPod/i.test(ua);
+    var isMobile  = /iPhone|iPad|iPod|Android/i.test(ua);
+
+    document.querySelectorAll('a[href]').forEach(function(a) {
+      if (isIOS && navigator.share) {
         a.addEventListener('click', function(e) {
-          if (navigator.share) {
-            e.preventDefault();
-            navigator.share({ url: a.href }).catch(function() {
-              window.open(a.href, '_blank');
-            });
-          }
+          e.preventDefault();
+          navigator.share({ url: a.href }).catch(function() {
+            window.location.href = a.href;
+          });
         });
-      });
-    }
-    // Android / PC: HTML target=_blank 그대로
+      } else if (!isMobile) {
+        // PC: sandbox가 popup 차단 → 현재 iframe 자체를 이동
+        // Notion 웹앱이 notion.so URL을 감지해 내부 처리
+        a.addEventListener('click', function(e) {
+          e.preventDefault();
+          window.location.href = a.href;
+        });
+      }
+      // Android: target=_blank HTML 그대로
+    });
   }
 
   addEventListener('DOMContentLoaded', function() { loadStats(); setupLinks(); });
