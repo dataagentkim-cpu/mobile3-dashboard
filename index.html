@@ -276,19 +276,10 @@
           window.top.location.href = a.href;
         });
       } else if (isIOS) {
-        // iOS: 실제 <a href="notion://..."> 엘리먼트를 JS로 클릭
-        // → WebKit이 linkActivated 타입으로 전달 → Notion이 네이티브로 인터셉트 가능
+        // iOS: target 제거, JS 인터셉트 없음
+        // 기본 <a href="https://notion.so/..."> 클릭 → linkActivated 타입
+        // Notion embed WKWebView 대리자가 notion.so URL 감지 후 앱 내 네이티브 이동 기대
         a.removeAttribute('target');
-        a.addEventListener('click', function(e) {
-          e.preventDefault();
-          var notionUrl = a.href.replace('https://www.notion.so', 'notion://www.notion.so');
-          var tmp = document.createElement('a');
-          tmp.href = notionUrl;
-          tmp.style.display = 'none';
-          document.body.appendChild(tmp);
-          tmp.click();
-          document.body.removeChild(tmp);
-        });
       } else {
         // PC: 새 탭
         a.setAttribute('target', '_blank');
