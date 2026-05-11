@@ -276,24 +276,20 @@
           window.top.location.href = a.href;
         });
       } else if (isIOS) {
-        // iOS: 네이티브 공유 시트로 WKWebView 제한 우회
-        // → 공유 시트에서 Notion 앱 탭 한 번으로 해당 페이지 오픈
-        a.removeAttribute('target');
+        // iOS: navigator.share 시도, 실패 시 target=_blank 폴백
         a.addEventListener('click', function(e) {
-          e.preventDefault();
           if (navigator.share) {
-            navigator.share({ url: a.href }).catch(function() {});
-          } else {
-            window.open(a.href, '_blank');
+            e.preventDefault();
+            navigator.share({ url: a.href }).catch(function() {
+              window.open(a.href, '_blank');
+            });
           }
+          // navigator.share 없으면 target 속성 그대로 두어 기본 동작
         });
       } else {
-        // PC: 현재 탭에서 바로 이동 (이미 Notion 로그인 상태)
-        a.removeAttribute('target');
-        a.addEventListener('click', function(e) {
-          e.preventDefault();
-          window.top.location.href = a.href;
-        });
+        // PC: sandbox 우회 불가 → target=_blank 새 탭 (확실히 동작)
+        a.setAttribute('target', '_blank');
+        a.setAttribute('rel', 'noopener');
       }
     });
   }
