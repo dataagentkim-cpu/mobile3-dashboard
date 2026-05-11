@@ -262,23 +262,16 @@
   }
 
   function setupLinks() {
-    var ua = navigator.userAgent;
-    var isAndroid = /Android/i.test(ua);
-    var isIOS     = /iPhone|iPad|iPod/i.test(ua);
-
-    if (isAndroid || isIOS) {
+    if (/Android/i.test(navigator.userAgent)) {
       document.querySelectorAll('a[href]').forEach(function(a) {
         a.removeAttribute('target');
         a.addEventListener('click', function(e) {
           e.preventDefault();
-          if (isAndroid) {
-            window.top.location.href = a.href;  // Android: 상위 프레임 이동
-          } else {
-            window.location.href = a.href;       // iOS: embed WKWebView 자체 이동
-          }                                      // → Notion 앱이 notion.so URL 감지 후 내부 처리 기대
+          window.top.location.href = a.href;
         });
       });
     }
+    // iOS/iPad/PC: HTML target=_blank 외부 링크 그대로
   }
 
   addEventListener('DOMContentLoaded', function() { loadStats(); setupLinks(); });
