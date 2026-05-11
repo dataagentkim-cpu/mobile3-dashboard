@@ -288,9 +288,12 @@
           }
         });
       } else {
-        // PC: 새 탭
-        a.setAttribute('target', '_blank');
-        a.setAttribute('rel', 'noopener');
+        // PC: 현재 탭에서 바로 이동 (이미 Notion 로그인 상태)
+        a.removeAttribute('target');
+        a.addEventListener('click', function(e) {
+          e.preventDefault();
+          window.top.location.href = a.href;
+        });
       }
     });
   }
