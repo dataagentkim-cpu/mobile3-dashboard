@@ -276,10 +276,17 @@
           window.top.location.href = a.href;
         });
       } else if (isIOS) {
-        // iOS: target 제거, JS 인터셉트 없음
-        // 기본 <a href="https://notion.so/..."> 클릭 → linkActivated 타입
-        // Notion embed WKWebView 대리자가 notion.so URL 감지 후 앱 내 네이티브 이동 기대
+        // iOS: 네이티브 공유 시트로 WKWebView 제한 우회
+        // → 공유 시트에서 Notion 앱 탭 한 번으로 해당 페이지 오픈
         a.removeAttribute('target');
+        a.addEventListener('click', function(e) {
+          e.preventDefault();
+          if (navigator.share) {
+            navigator.share({ url: a.href }).catch(function() {});
+          } else {
+            window.open(a.href, '_blank');
+          }
+        });
       } else {
         // PC: 새 탭
         a.setAttribute('target', '_blank');
