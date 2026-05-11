@@ -264,7 +264,6 @@
 
   function setupLinks() {
     var ua = navigator.userAgent;
-    var isIOS     = /iPhone|iPad|iPod/i.test(ua);
     var isAndroid = /Android/i.test(ua);
 
     document.querySelectorAll('a[href]').forEach(function(a) {
@@ -274,16 +273,8 @@
           e.preventDefault();
           window.top.location.href = a.href;
         });
-      } else if (isIOS) {
-        a.addEventListener('click', function(e) {
-          if (navigator.share) {
-            e.preventDefault();
-            navigator.share({ url: a.href }).catch(function() {
-              window.open(a.href, '_blank');
-            });
-          }
-        });
       } else {
+        // iOS / PC: 외부 링크로 새 탭/Safari 열기
         a.setAttribute('target', '_blank');
         a.setAttribute('rel', 'noopener');
       }
